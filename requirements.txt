@@ -1,0 +1,7 @@
+ultralytics
+mediapipe==0.10.35
+opencv-python
+numpy
+huggingface_hub
+google-genai
+python-dotenv
