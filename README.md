@@ -47,32 +47,7 @@ Setelah sesi monitoring selesai, sistem dapat menghasilkan laporan analisis kons
 
 ## Arsitektur Pipeline
 
-```mermaid
-graph TB
-    A["Input: Webcam / Video File"] --> B["Preprocessing: CLAHE + Resize"]
-    B --> C["Face Detection: YOLOv8-face"]
-    C --> D{"Wajah Terdeteksi?"}
-    D -- "Tidak" --> E["Dashboard: Tidak Ada Wajah"]
-    D -- "Ya" --> F["Crop Wajah + Padding 30%"]
-    F --> G["Landmark Extraction: MediaPipe 468-point"]
-    G --> H{"Landmark Valid?"}
-    H -- "Tidak" --> I["Skip Wajah Ini"]
-    H -- "Ya" --> J["Feature Extraction"]
-    J --> J1["Hitung EAR"]
-    J --> J2["Hitung MAR"]
-    J --> J3["Hitung Head Pose"]
-    J1 --> K["Auto-Calibration Check"]
-    J2 --> K
-    J3 --> K
-    K --> K1{"Sudah Terkalibrasi?"}
-    K1 -- "Belum" --> K2["Rekam Baseline"]
-    K1 -- "Sudah" --> L["Klasifikasi Status"]
-    L --> M["Visualisasi + Dashboard"]
-    L --> N["Session Tracker"]
-    N --> O{"Sesi Selesai?"}
-    O -- "Belum" --> A
-    O -- "Ya" --> P["Gemini API: Generate Laporan"]
-```
+![Pipeline Flowchart](assets/pipeline-flowchart.svg)
 
 ---
 
