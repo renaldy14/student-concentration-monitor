@@ -10,12 +10,9 @@ Usage:
 """
 
 from __future__ import annotations
-
 import argparse
-
 import cv2
 import numpy as np
-
 from src.classifier import (
     STATE_ALERT,
     STATE_DISTRACTED,
@@ -34,8 +31,7 @@ from src.visualizer import Visualizer
 WINDOW_TITLE = "Student Concentration Monitor"
 
 
-# ─── Argument Parsing ────────────────────────────────────────
-
+# Argument Parsing
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Monitoring konsentrasi mahasiswa menggunakan Computer Vision",
@@ -51,7 +47,7 @@ def parse_arguments() -> argparse.Namespace:
     return parser.parse_args()
 
 
-# ─── Video Source ────────────────────────────────────────────
+# Video Source
 
 def open_video_source(video_path: str | None) -> tuple[cv2.VideoCapture, int]:
     """
@@ -78,7 +74,7 @@ def open_video_source(video_path: str | None) -> tuple[cv2.VideoCapture, int]:
     return cap, delay
 
 
-# ─── Per-Frame Pipeline ─────────────────────────────────────
+# Per-Frame Pipeline
 
 def process_faces(
     frame: np.ndarray,
@@ -118,7 +114,7 @@ def process_faces(
     return results
 
 
-# ─── Session Summary ─────────────────────────────────────────
+# Session Summary
 
 def print_session_summary(summary: dict) -> None:
     """Cetak statistik dasar ke terminal."""
@@ -138,8 +134,7 @@ def print_session_summary(summary: dict) -> None:
     print("=" * 50)
 
 
-# ─── Main ────────────────────────────────────────────────────
-
+# Main
 def main() -> None:
     args = parse_arguments()
 
@@ -158,7 +153,7 @@ def main() -> None:
         print(f"❌ {err}")
         return
 
-    # ─── Main Loop ───────────────────────────────────────────
+    # Main Loop
     while True:
         ret, frame = cap.read()
         if not ret:
@@ -185,7 +180,7 @@ def main() -> None:
         if cv2.waitKey(frame_delay) & 0xFF == ord("q"):
             break
 
-    # ─── Cleanup & Report ────────────────────────────────────
+    # Cleanup & Report
     cap.release()
     cv2.destroyAllWindows()
 
