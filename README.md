@@ -135,7 +135,7 @@ Buka `.env` dan masukkan API key Google Gemini:
 GEMINI_API_KEY=api_key_kamu_di_sini
 ```
 
-Dapatkan API key gratis (tanpa kartu kredit) di [Google AI Studio](https://aistudio.google.com/app/apikey).
+Dapatkan API key gratis di [Google AI Studio](https://aistudio.google.com/app/apikey).
 
 > **Catatan:** Komponen Gemini API bersifat opsional. Jika API key tidak diisi atau koneksi internet tidak tersedia, sistem tetap berfungsi penuh untuk monitoring real-time dan menggunakan laporan template sebagai pengganti laporan AI.
 
