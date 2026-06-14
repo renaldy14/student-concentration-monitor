@@ -13,13 +13,13 @@ from __future__ import annotations
 from collections import deque
 
 
-# ─── State Labels ────────────────────────────────────────────
+# State Labels
 STATE_ALERT = "Alert"
 STATE_DROWSY = "Drowsy"
 STATE_DISTRACTED = "Distracted"
 STATE_YAWNING = "Yawning"
 
-# ─── Weighted Concentration per State ────────────────────────
+# Weighted Concentration per State
 # Dipakai untuk menghitung konsentrasi kelas secara gradual
 STATE_CONCENTRATION_WEIGHTS: dict[str, float] = {
     STATE_ALERT: 1.00,       # 100%
@@ -28,7 +28,7 @@ STATE_CONCENTRATION_WEIGHTS: dict[str, float] = {
     STATE_YAWNING: 0.15,     # 15%
 }
 
-# ─── Thresholds ──────────────────────────────────────────────
+# Thresholds
 # EAR: menggunakan RASIO relatif terhadap baseline (bukan absolut)
 # sehingga adaptif terhadap bentuk mata apapun
 EAR_CLOSED_RATIO = 0.65           # mata dianggap tertutup jika EAR < 65% baseline
@@ -39,7 +39,7 @@ YAW_DISTRACTED_DEG = 15.0
 PITCH_DISTRACTED_DEG = 15.0
 PERCLOS_DROWSY_THRESHOLD = 0.40
 
-# ─── Temporal Settings ───────────────────────────────────────
+# Temporal Settings
 HISTORY_MAX_FRAMES = 150
 CALIBRATION_FRAME_COUNT = 30
 
@@ -66,8 +66,7 @@ class ConcentrationClassifier:
         self._ear_baseline: float = 0.0
         self._is_calibrated: bool = False
 
-    # ─── Public Properties ───────────────────────────────────
-
+    # Public Properties
     @property
     def is_calibrated(self) -> bool:
         return self._is_calibrated
@@ -82,8 +81,7 @@ class ConcentrationClassifier:
     def ear_baseline(self) -> float:
         return self._ear_baseline
 
-    # ─── Public Methods ──────────────────────────────────────
-
+    # Public Methods
     def classify(self, features: dict) -> dict:
         if features is None:
             return {"state": STATE_ALERT, "perclos": 0.0}
@@ -105,8 +103,7 @@ class ConcentrationClassifier:
         self._yaw_baseline = 0.0
         self._ear_baseline = 0.0
 
-    # ─── Private: Calibration ────────────────────────────────
-
+    # Private: Calibration
     def _handle_calibration(self, features: dict) -> dict:
         self._calibration_buffer.append(features)
 
@@ -133,8 +130,7 @@ class ConcentrationClassifier:
 
         return {"state": STATE_ALERT, "perclos": 0.0}
 
-    # ─── Private: State Detection ────────────────────────────
-
+    # Private: State Detection
     def _determine_state(self, features: dict, perclos: float) -> str:
         if self._is_yawning(features):
             return STATE_YAWNING
@@ -174,8 +170,7 @@ class ConcentrationClassifier:
         return closed_count / len(self._ear_history)
 
 
-# ─── Module-Level Utility ────────────────────────────────────
-
+# Module-Level Utility
 def calculate_weighted_concentration(face_results: list[dict]) -> float:
     """
     Hitung konsentrasi kelas dengan bobot per status.

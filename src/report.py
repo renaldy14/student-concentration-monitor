@@ -26,10 +26,10 @@ from src.classifier import (
 )
 
 
-# ─── Constants ───────────────────────────────────────────────
+# Constants
 ALL_STATES = [STATE_ALERT, STATE_DROWSY, STATE_DISTRACTED, STATE_YAWNING]
 SNAPSHOT_INTERVAL_SEC = 5.0
-GEMINI_MODEL = "gemini-1.5-flash"
+GEMINI_MODEL = "gemini-2.0-flash"
 REPORTS_DIR = Path(__file__).parent.parent / "reports"
 
 
@@ -99,8 +99,7 @@ class SessionTracker:
         })
 
 
-# ─── Report Generation ──────────────────────────────────────
-
+# Report Generation
 def generate_report(summary: dict) -> str:
     load_dotenv()
     api_key = os.getenv("GEMINI_API_KEY")
@@ -110,11 +109,13 @@ def generate_report(summary: dict) -> str:
         return _fallback_report(summary)
 
     try:
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel(GEMINI_MODEL)
+        client = genai.Client(api_key=api_key)
         prompt = _build_prompt(summary)
-        response = model.generate_content(prompt)
-        return response.text
+        response = client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=prompt,
+        )
+        return response.text or _fallback_report(summary)
 
     except Exception as err:
         print(f"⚠️  Gemini API error: {err} → laporan template.")

@@ -21,7 +21,7 @@ from src.classifier import (
 )
 
 
-# ─── Visual Constants ────────────────────────────────────────
+# Visual Constants
 FONT = cv2.FONT_HERSHEY_SIMPLEX
 FONT_SCALE_SM = 0.50
 FONT_SCALE_MD = 0.60
@@ -43,7 +43,7 @@ TEXT_WHITE = (255, 255, 255)
 DASHBOARD_HEIGHT = 44
 STATE_LABEL_HEIGHT = 26
 
-# ─── Behavior Constants ──────────────────────────────────────
+# Behavior Constants
 DETAIL_FACE_THRESHOLD = 3          # hide info panel jika wajah > ini
 CONCENTRATION_SMOOTHING = 0.05     # EMA alpha (lower = smoother)
 
@@ -59,8 +59,7 @@ class Visualizer:
     def __init__(self) -> None:
         self._smoothed_concentration: float = 100.0
 
-    # ─── Public API ──────────────────────────────────────────
-
+    # Public API
     def render(self, frame: np.ndarray, face_results: list[dict]) -> None:
         show_detail = len(face_results) <= DETAIL_FACE_THRESHOLD
 
@@ -99,8 +98,7 @@ class Visualizer:
             FONT, FONT_SCALE_MD, TEXT_WHITE, THICKNESS_THIN, cv2.LINE_AA,
         )
 
-    # ─── Private: Per-Face ───────────────────────────────────
-
+    # Private: Per-Face
     def _draw_face_overlay(
         self, frame: np.ndarray, result: dict, show_detail: bool,
     ) -> None:
@@ -114,11 +112,11 @@ class Visualizer:
         # Bounding box
         cv2.rectangle(frame, (x1, y1), (x2, y2), color, THICKNESS_BOLD)
 
-        # INFO PANEL DULU (di layer bawah)
+        # Panel Information (di layer bawah)
         if show_detail:
             self._draw_info_panel(frame, bbox, features, classification, color)
 
-        # STATE LABEL TERAKHIR (di layer atas, tidak tertutup panel)
+        # State Label (di layer atas, tidak akan menutup panel)
         self._draw_state_label(frame, state, color, x1, y1)
 
     def _draw_state_label(
@@ -167,12 +165,12 @@ class Visualizer:
         panel_w = max_text_w + PANEL_PADDING * 2
         panel_h = len(info_lines) * LINE_HEIGHT + PANEL_PADDING * 2
 
-        # Posisi: di bawah bbox (preferred)
+        # Posisi di bawah bbox (preferred)
         panel_x = max(0, min(x1, frame_w - panel_w))
         panel_y = y2 + 5
 
         if panel_y + panel_h > frame_h:
-            # Fallback: di atas bbox, tapi sisakan ruang untuk state label
+            # Fallback di atas bbox, tapi sisakan ruang untuk state label
             panel_y = y1 - panel_h - STATE_LABEL_HEIGHT - 5
 
         panel_y = max(DASHBOARD_HEIGHT + 2, panel_y)
@@ -198,8 +196,7 @@ class Visualizer:
                 FONT, FONT_SCALE_SM, TEXT_WHITE, THICKNESS_THIN, cv2.LINE_AA,
             )
 
-    # ─── Private: Dashboard ──────────────────────────────────
-
+    # Private: Dashboard
     def _draw_dashboard(self, frame: np.ndarray, face_results: list[dict]) -> None:
         frame_w = frame.shape[1]
         cv2.rectangle(frame, (0, 0), (frame_w, DASHBOARD_HEIGHT), BG_DARK, -1)

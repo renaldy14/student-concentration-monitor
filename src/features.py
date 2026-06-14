@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 
 
-# ─── Landmark Index Constants ────────────────────────────────
+# Landmark Index Constants
 # MediaPipe FaceMesh 468-point indices.
 # Diberi nama eksplisit agar tidak ada magic number.
 
@@ -40,8 +40,7 @@ FACE_3D_MODEL = np.array([
 ], dtype=np.float64)
 
 
-# ─── Private Helpers ─────────────────────────────────────────
-
+# Private Helpers
 def _euclidean_distance(point_a: np.ndarray, point_b: np.ndarray) -> float:
     """Hitung jarak Euclidean antara dua titik 2D."""
     return float(np.linalg.norm(point_a - point_b))
@@ -63,8 +62,7 @@ def _build_camera_matrix(frame_width: int, frame_height: int) -> np.ndarray:
     ], dtype=np.float64)
 
 
-# ─── Public Feature Functions ────────────────────────────────
-
+# Public Feature Functions
 def calculate_ear(landmarks: np.ndarray, eye_indices: list) -> float:
     """
     Hitung Eye Aspect Ratio (EAR) untuk satu mata.
