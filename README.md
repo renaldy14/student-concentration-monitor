@@ -251,8 +251,8 @@ Mengumpulkan statistik sesi (distribusi status, timeline snapshot setiap 5 detik
 
 | Nama | Peran |
 |------|-------|
-| — | Preprocessing + Pipeline Integration |
+| — | Preprocessing dan Pipeline Integration |
 | — | Feature Extraction (EAR, MAR, Head Pose) |
-| — | Klasifikasi + Generative AI Report |
+| — | Klasifikasi, Visualisasi dan Generative AI Report |
 
 Kelompok 2 — TIF24 Komputer Vision, Universitas Bunda Mulia.
