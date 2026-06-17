@@ -251,8 +251,8 @@ Mengumpulkan statistik sesi (distribusi status, timeline snapshot setiap 5 detik
 
 | Nama | Peran |
 |------|-------|
-| — | Preprocessing dan Pipeline Integration |
-| — | Feature Extraction (EAR, MAR, Head Pose) |
-| — | Klasifikasi, Visualisasi dan Generative AI Report |
+| Renaldy Runtulalo - 32230132 | Preprocessing dan Pipeline Integration |
+| Raffael Bernard Wijaya - 32230094 | Feature Extraction (EAR, MAR, Head Pose) |
+| Hendy Tandika - 32230129 | Klasifikasi, Visualisasi dan Generative AI Report |
 
 Kelompok 2 — TIF24 Komputer Vision, Universitas Bunda Mulia.
